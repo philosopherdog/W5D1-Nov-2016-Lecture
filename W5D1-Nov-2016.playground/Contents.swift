@@ -1,63 +1,67 @@
 import UIKit
 /*:
-## Swift 3
-
-- In 2014 Apple blew away developers with a surprise announcement that a new programming language called Swift had been secretly under development for 4 years!
-
-- Since being announced Swift has been officially open sourced and has been ported to Linux. This is huge because it makes its use on servers possible. Google has been talking about using it to replace Java on Android!
-
-- Swift is still rapidly changing. New versions of Swift are not expected to be source compatible until at least Swift 4. So, this limits its use in serious applications.
-*/
+ ## Swift 3
+ 
+ - In 2014 Apple blew away developers with a surprise announcement that a new programming language called Swift had been secretly under development for 4 years!
+ 
+ - Since being announced Swift has been officially open sourced and has been ported to Linux. This is huge because it makes its use on servers possible.
+ 
+ - Google has been talking about using it to replace Java on Android!
+ 
+ - Swift is still rapidly changing. New versions of Swift are not expected to be source compatible until at least Swift 4. So, this limits its use to apps that are not mission critical.
+ */
 /*:
-## Playgrounds
+ ## Playgrounds
  
  - Playgrounds is a simple 'Live Coding' environment. 👍🏻👍🏻👍🏻👍🏻
  
  - But Playgrounds are crash prone. 👎🏻👎🏻👎🏻 (💪🏻 set the run option to manual).
-*/
+ */
 //: 👷🏼 Create a sample playground:
 /*:
-### Markup in Playgrounds
-
-- You can view markdown (Apple calls it "markup") in Playgrounds using a special syntax. You can find the syntax [here](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/).
-
-- Toggle between rendering and raw markup using the menu item: `editor > show raw markup` or `editor > show rendered markup`
-*/
+ ### Markup in Playgrounds
+ 
+ - You can view markdown (Apple calls it "markup") in Playgrounds using a special syntax. You can find the syntax [here](https://developer.apple.com/library/content/documentation/Xcode/Reference/xcode_markup_formatting_ref/).
+ 
+ - Toggle between rendering and raw markup using the menu item: `editor > show raw markup` or `editor > show rendered markup`
+ */
 //: ![Imgur](render-markup.png)
 
 /*:
-## Variables & Constants
-- Declare variables with the  `var` keyword.
-- Constants are declared with `let`.
-*/
+ ## Variables & Constants
+ - Declare variables with the  `var` keyword.
+ - Constants are declared with `let`.
+ */
 let birthYear = 1988
 let name = "George"
 let 🐱 = "cat"
 let cat:Character = "🐱"
 
 /*:
-## Types & Type Inference
-- Unlike Objc, Swift declares types *after* the name, followed by a colon
-*/
+ ## Types & Type Inference
+ - Swift declares types *after* the name following a colon
+ */
 
 var address: String = "289 Anywhere St"
 
 /*:
-- Swift supports type inference
-*/
+ - Swift supports "type inference"
+ */
 
 var address2 = "34 Jones Cr"
 
 var address3: String
 
 /*:
-#### Types
-- Types are **CAPPED** like Objc and instance are lower case
-- Swift has Swift specific foundation types for Int, Double, String, Array, Dictionary, Set etc.
-- Swift has a generic type like `id` calle `AnyObject`
-- Swift also has a type `Any` which includes functions
-- You have to cast between them using **as**
-*/
+ #### Types
+ - Types are upper cased
+ - Instances are lower cased
+ - There arre Swift specific foundation types for Int, Double, String, Array, Dictionary, Set, etc.
+ - Swift can also easily and seamlessly cast between Swift Foundation types and the old foundation classes
+ - Swift has a generic type like `id` called `AnyObject`
+ - Swift also has a type `Any` which includes functions
+ - You have to cast between them using **as**
+ */
 
 var address4 = address2 as NSString
 let address5 = address4 as AnyObject
@@ -65,37 +69,37 @@ let address6 = address5 as! NSString // we'll discuss "!" below
 
 //: **Tip:** prefer Swift types where possible
 
-//: Number literals default to Swift **Int** type, which is a struct (more on structs below)!
+//: Integer literals default to Swift **Int** type, which is a struct (more on structs below)
 
 var n1 = 1
 let n2 = -2
 
-//: Float literals default to **Double**, which is an object!
+//: Float literals default to **Double**, which is also a struct type!
 
 var f1 = 1.0
 let f2 = 2.0
 
 //: **Tip:** prefer Int and Double to other numeric types
 
-//: Other numeric types
+//: There are many other numeric types
 let f4: Float = 4.0
 var u1: UInt = 20
 var n32: Int32 = 32 // You can specify Int sizes
 
 /*:
-### `print()` & String Interpolation
-- No more `NSLog` 👍🏻
-- Use `print()` instead
+ ### `print()` & String Interpolation
+ - No more `NSLog` 👍🏻
+ - Use `print()` instead
  */
 let s2 = "Mud"
 print(#line, f1)
-print("my name is \(s2)")
-print("my favourite number is \(f4 + Float(f2))")
+print("\(#line) my name is \(s2)")
+print("(#line) my favourite number is \(f4 + Float(f2))")
 
 /*:
-## Operators
-- "+ - * / = > >= < <= == ===" work similar to Objc
-- But you can use some of them on Strings as well
+ ## Operators
+ - "+ - * / = > >= < <= == ===" work similar to Objc
+ - But you can use some of them on Strings as well
  */
 
 var s5 = "new "
@@ -105,26 +109,25 @@ s3 += " Fisher"
 s3
 
 /*:
-## Bool
-- Unlike Objc we don't use `YES` and `NO` 👎🏻
-- use `true` and `false` instead
-*/
+ ## Bool
+ - Unlike Objc we don't use `YES` and `NO` 👎🏻
+ - use `true` and `false` instead
+ */
 
 let name2 = "Freddy Mercury"
 let result1 = name2.hasPrefix("Freddy")
-let result2 = name2.hasSuffix("Freddy")
 
 if result1 {
   print("he's the singer of Queen")
 }
-if result2 {
+if name2.hasSuffix("Freddy") {
   print("this never executes")
 }
 
-/*: 
-## String
-- The String class in Swift makes string manipulation very complex.
-*/
+/*:
+ ## String
+ - The String class in Swift makes string manipulation complex.
+ */
 
 let char:Character = "T"
 let s6 = String(char)
@@ -142,22 +145,22 @@ name4.removeAll()
 let result3 = name4.isEmpty == true ? "Empty" : "No Empty"
 
 /*:
-## Optionals
-- All variables/constants in Swift must have a value unlike Objc
-*/
+ ## Optionals
+ - All variables/constants in Swift must have a value unlike Objc
+ */
 
 /*
-Objc allows variables to be nil
-
-NSString *s7;
-if (s7) {
-  NSLog(@"%@", s7)
-}
-*/
+ Objc allows variables to be nil
+ 
+ NSString *s7;
+ if (s7) {
+ NSLog(@"%@", s7)
+ }
+ */
 
 /*:
-- **In Swift we must explicitly mark a variable/constant as an Optional type which allows it to be either nil or some value**
-*/
+ - **In Swift we must explicitly mark a variable/constant as an Optional type which allows it to be either nil or some value**
+ */
 
 var notAllowed: String
 
@@ -176,18 +179,18 @@ if opt1 == nil {
 opt1 = "my first optional string"
 
 /*:
-## Why Optionals Need to be Unwrapped
-- Think of Optionals as a box, just like NSNumber in Objc
-- Just like you cannot do very much with an NSNumber in Objc unless you call `intValue` on it to get the underlying value. So too Optionals are pretty useless unless you **unwrap** them
+ ## Why Optionals Need to be Unwrapped
+ - Think of Optionals as a box, just like NSNumber in Objc
+ - Just like you cannot do very much with an NSNumber in Objc unless you call `intValue` on it to get the underlying value. So too Optionals can only be used for nil checking without **unwrapping** them
  
-*/
-  
+ */
+
 /*:
-### Forced Unwrap
-- The simpless and most dangerous way to unwrap (unbox) an optional is called `forced unwrap`
-- Generally avoid this unless you are sure of what you're doing
-- Uses the bang operator `!`
-*/
+ ### Forced Unwrap
+ - The simpless and most dangerous way to unwrap (unbox) an optional is called `forced unwrap`
+ - Generally avoid this unless you are sure of what you're doing
+ - It simply uses the bang `!` operator
+ */
 
 var n3: Int?
 n3 = 20
@@ -197,29 +200,34 @@ n3 = 20
 let r4 = n3! + 20
 
 /*:
-- Optionals allow you to set any value to nil, including C Struct types, and Int values (but Ints are object types in Swift anyway so that's not that crazy).
-*/
+ - Optionals allow you to set any value to nil, including C Struct types, and Int values (but Ints are object types in Swift anyway so that's not that crazy).
+ */
 
 var n5:Int? = nil
 
 var rect: CGRect? = nil
 
-// CGRect rect = nil; // error in Objc because CGRect is a primitive type
+// CGRect rect = nil; //Objc error in Objc because CGRect is a primitive type
 
 /*:
-- You can force unwrap after checking for nil first. But never do this
-*/
+ - You can force unwrap after checking for nil first. You will almost never want to do this.
+ */
 
-// Notice let allows nil and an initial assignment
+if n3 != nil {
+  // force unwrap after nil checking
+  n3!
+}
+
+//: Notice `let` allows you to start nil and have an initial assignment
 let n6:String?
-n6 = "YES"
+n6 = "yippy"
 
-//n6 = "NO" //error you can't reassign
+//n6 = "NO" //error you can't reassign `let`
 
-/*: 
-### Optional Binding
-- Swift provides convenience syntax for binding an optional to a variable
-*/
+/*:
+ ### Optional Binding
+ - Swift provides convenience syntax for binding an optional to a variable
+ */
 
 if let n6 = n6 {
   print(#line, n6) // prints YES
@@ -231,29 +239,36 @@ if let someConstant = n6 {
   print(#line, someConstant) // prints YES
 }
 
-/*:
-## Casting
-*/
+//: guard lets you bind and handle the unwrapped optional outside the block! This is insanely powerful. 👍🏻
+
+guard let n6 = n6 else {
+  fatalError()
+}
+
+n6 // is unwrapped now
 
 /*:
-## Optional Casting
-*/
+ ## Casting & Optionals
+ */
+
+let anyString = "some string" as AnyObject // upcasting never fails
+let downCastString = anyString as! String // downcasting can fail so it returns an optional
 
 /*:
-## Arrays
-- Similar to `NSArray`, and you can still use `NSArray` (but prefer `Array`)
-- `NSArray` is heterogeneous
-- `Array` is homogeneous
-*/
+ ## Arrays
+ - Similar to `NSArray`, and you can still use `NSArray` (but prefer `Array`)
+ - `NSArray` is heterogeneous
+ - `Array` is homogeneous
+ */
 
 
 let a1 = [2, 4, 6, 8] // [Int] type inferred
 
 //error let a2 = [2, 4, 6, 8, "John"]
 
-//: Create Mutable Empty Array 2 Ways
+//: Create Mutable Empty Array of String types in 2 Ways
 
-var a3: [String] = []
+var a3: [String] = [] // this seems more intuitive to me
 var a4 = [String]()
 
 a3.append("One")
@@ -264,15 +279,19 @@ a3
 a3[0]
 
 /*:
-## Range
-- Used to access a range of values, similar to NSRange
-*/
+ ## Range
+ - Used to access a range of values, similar to NSRange
+ */
 
-//: Close Range
+//: Closed Range
 let range1 = 1...3
 a1[range1]
 
-a3[0...1]
+if range1 ~= 1 {
+  print("yes 1 is within range1")
+}
+
+a3[0...1] // slicing an array
 
 //: Half-Open Range
 let range2 = 0..<2
@@ -288,7 +307,7 @@ n7
 n7.remove(at: n7.count-1)
 n7
 
-// looping through an array
+//: looping through an array
 for i in n7 {
   print(#line, i)
 }
@@ -310,17 +329,17 @@ for (index, value) in n7.enumerated() {
 //: No C style loops as of Swift 3!
 
 /*
-for (i = 0; i < 10; ++i) {
-  
-}
-*/
+ for (i = 0; i < 10; ++i) {
+ 
+ }
+ */
 
 /*:
-## Dictionary
-- Similar to `NSDictionary`
-- `NSDictionary` is heterogeneous
-- `Dictionary` is homogeneous
-*/
+ ## Dictionary
+ - Similar to `NSDictionary`
+ - `NSDictionary` is heterogeneous
+ - `Dictionary` is homogeneous
+ */
 
 //: Immutable
 
@@ -336,7 +355,7 @@ let answer1 = answersDict[2]
 let answer2 = answersDict[5]
 
 if let answer2 = answer2 {
-  print("answer2 is nil")
+  print("answer2 is nil. this will never execute")
 }
 
 // mutating
@@ -350,9 +369,9 @@ answersDict[2] = nil
 answersDict
 
 /*:
-### Looping Over a Dictionary
-- Dictionaries can be looped over (DO NOT RELY ON THE ORDER)
-*/
+ ### Looping Over a Dictionary
+ - Dictionaries can be looped over (DO NOT RELY ON THE ORDER)
+ */
 
 let interestingNumbers =
   ["Prime": [2, 3, 5, 7, 11, 13],
@@ -367,34 +386,38 @@ for (kind, numbers) in interestingNumbers {
 }
 
 /*:
-## Switch
- `switch` much more powerful in Swift. not just limited to integers/enums
+ ## Switch
+ `switch` much more powerful in Swift. not just limited to integers
  
  1. switch on any type of data.
  2. can handle complex cases.
- 3. swtich must be **exhaustive**.
+ 3. switch must be **exhaustive**.
  4. `break` is implicit (use `fallthrough` if you don't want this behaviour)
-*/
+ */
 
-var vegetableComment:String?
+var comment:String?
 let vegetable = "red pepper"
 
 switch vegetable {
 case "celery":
-  vegetableComment = "Add some raisins and make ants on a log."
+  comment = "Add some raisins and make ants on a log."
 case "cucumber", "watercress":
-  vegetableComment = "That would make a good tea sandwich."
+  comment = "That would make a good tea sandwich."
 case let pepper where vegetable.hasSuffix("pepper"):
-  vegetableComment = "Is it a spicy \(pepper)?"
+  comment = "Is it a spicy \(pepper)?"
 default:
-  vegetableComment =  nil
+  comment =  nil
 }
 
-vegetableComment
+guard let comment = comment else {
+  fatalError() // usually return
+}
+
+comment // unwrapped here!
 
 /*:
-## While Loop
-*/
+ ## While Loop
+ */
 var count = 0
 while count < 5 {
   print(#line, count)
@@ -407,14 +430,15 @@ var counter2 = 0
 repeat {
   print(#line, counter2)
   counter2 += 1
-} while counter2 < 1
+} while counter2 < 0
 
 /*:
-## Function
-- functions are named closures
-- functions are first class citizens unlike Objc
-- functions can be nested, passed as parameters, assigned, added to collections
-*/
+ ## Functions
+ - functions are named closures
+ - functions are first class citizens (unlike Objc)
+ - functions can be nested inside other functions
+ - they can be passed as parameters, assigned to variables, added to collections, etc.
+ */
 
 func greeting()-> Void {
   print(#line, "hello!")
@@ -422,6 +446,12 @@ func greeting()-> Void {
 
 greeting()
 
+let funcToConstant = greeting
+funcToConstant()
+let funcArray = [greeting]
+funcArray[0]()
+
+//: Unlike Objc Swift includes an initial external parameter name (new in Swift 3)
 func greetingWith(firstName: String, hours: Int) -> String {
   return "\(#line) \(firstName) you have \(hours) hours this week"
 }
@@ -439,10 +469,10 @@ greetingWithFirstName("Mammy")
 //: [More about functions](https:developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#apple_ref/doc/uid/TP40014097-CH10-ID158)
 
 /*:
-## Closures
-- They function identifically to Objc blocks
-- Unnamed functions
-*/
+ ## Closures
+ - They function identically to Objc blocks (which we haven't talked about!)
+ - Closures are simply unnamed functions
+ */
 
 //: Function
 
@@ -480,12 +510,12 @@ numStrings
 //: [More about closures](https:developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#apple_ref/doc/uid/TP40014097-CH11-ID94)
 
 /*:
-## Tuples
-- Tuples are a heterogenous grouping of values
-- Function parameters are actually tuples
-- Can be used to return more than 1 value from a function
-- Should be used judiciously for passing data to a function or returning data (prefer real objects)
-*/
+ ## Tuples
+ - Tuples are a heterogenous grouping of values
+ - Function parameters are actually tuples, but you can pass tuples too (?)
+ - Can be used to return more than 1 value from a function
+ - Should be used judiciously for passing data to a function or returning data (prefer real objects)
+ */
 
 var person = (firstName: "Dolly", lastName: "Wheeler", age: 33)
 
@@ -518,12 +548,11 @@ theFirstName
 theLastName
 
 /*:
-## Classes
-- Swift has 3 object types Classes, Structs, and Enums
-- Classes are reference types. 
-- Structs and Enums are value types
-- No .h file in Swift
-*/
+ ## Classes
+ - Swift has 3 object types Classes, Structs, and Enums
+ - Classes are reference types.
+ - Structs and Enums are value types.
+ */
 
 class LibraryCard {
   let number: String
@@ -532,8 +561,14 @@ class LibraryCard {
   }
 }
 
+class Boss: CustomStringConvertible {
+  var description: String {
+    return "Big Boss"
+  }
+}
+
 class Person {
-  // don't need to inherit from NSObject
+  lazy var boss = Boss()
   let firstName: String
   let lastName: String
   var age: Int = 20 {
@@ -561,6 +596,9 @@ fred.firstName
 fred.lastName
 fred.age = 44 // setting age
 fred.libraryCard
+fred.boss
+
+fred.fullName()
 
 //: **Notice:** classes have a default init which is no longer used once you create a custom init
 
@@ -579,15 +617,20 @@ person2.age = 44
 person2.fullName()
 
 /*:
-## Structs
-- they are the same as classes
-- unlike classes they are value types
-- they cannot be subclassed (but you can use protocols)
-*/
+ ## Structs
+ - very similar to classes
+ - but they are value types
+ - they cannot be subclassed (but you can use protocols)
+ */
 
 import CoreLocation
 
+struct DogManager {
+  
+}
+
 struct Dog1 {
+  let dogManger = DogManager()
   let name: String
   let breed: String
   var age: Int
@@ -617,7 +660,7 @@ struct Dog2 {
   
   private var location: CLLocation? = nil
   
-  // methods that change stored values must be marked mutating on a struct
+  // methods that change stored values must be marked `mutating` on a struct
   mutating func change(location:CLLocation) {
     self.location = location
   }
@@ -629,10 +672,10 @@ dog2.change(location: CLLocation(latitude: 43.6532, longitude: -79.3832))
 
 
 /*:
-## Enums
-- Way more powerful than C style enums
-- Can be used with Strings and Character values as well as numberic values
-*/
+ ## Enums
+ - Way more powerful than C style enums
+ - Can be used with Strings and Character values as well as numberic values
+ */
 
 enum Suit1: String {
   case clubs = "Clubs"
@@ -693,10 +736,10 @@ case .delayed(let minutes):
 }
 
 /*:
-## Extensions
-- like Objc categories
-- Used extensively especially for organizing code
-*/
+ ## Extensions
+ - like Objc categories
+ - Used extensively especially for organizing code
+ */
 
 class MasterViewController: UIViewController {
   
@@ -730,9 +773,43 @@ let frame = CGRect(x: 1, y: 2, width: 3, height: 3)
 frame.prettyPrint()
 
 /*:
-## Resources
-* [Swift 3 Language Guide](https:developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#apple_ref/doc/uid/TP40014097-CH5-ID309)
-*/
+ ## Protocols
+ - The same as Objc, except optional protocols are not there out of the box
+ */
+
+protocol Flyable {
+  func fly()
+}
+
+class MallardDuck: Flyable {
+  func fly() {
+    print("\(#line) flyin high 🚀!")
+  }
+}
+
+class RubberDuck {
+}
+
+extension RubberDuck: Flyable {
+  func fly() {
+    print("\(#line) Can't fly worth beans 🐤")
+  }
+}
+
+func flyingMachine(flyable:Flyable) {
+  flyable.fly()
+}
+
+let mallard = MallardDuck()
+let rubber = RubberDuck()
+
+flyingMachine(flyable: mallard)
+flyingMachine(flyable: rubber)
+
+/*:
+ ## Resources
+ * [Swift 3 Language Guide](https:developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#apple_ref/doc/uid/TP40014097-CH5-ID309)
+ */
 
 
 
