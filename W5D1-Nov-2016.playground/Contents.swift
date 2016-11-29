@@ -11,6 +11,8 @@ import UIKit
  - Swift is still rapidly changing. New versions of Swift are not expected to be source compatible until at least Swift 4. So, this limits its use to apps that are not mission critical.
  */
 /*:
+ 
+ #
  ## Playgrounds
  
  - Playgrounds is a simple 'Live Coding' environment. 👍🏻👍🏻👍🏻👍🏻
@@ -36,13 +38,15 @@ let birthYear = 1988
 let name = "George"
 let 🐱 = "cat"
 let cat:Character = "🐱"
+var breakfast = "Eggs"
+breakfast = "Toast"
 
 /*:
  ## Types & Type Inference
  - Swift declares types *after* the name following a colon
  */
 
-var address: String = "289 Anywhere St"
+var address = "289 Anywhere St"
 
 /*:
  - Swift supports "type inference"
@@ -142,7 +146,7 @@ if name3 > name3Cap {
 
 var name4 = name3
 name4.removeAll()
-let result3 = name4.isEmpty == true ? "Empty" : "No Empty"
+let result3 = name4.isEmpty == true ? "Empty" : "Not Empty"
 
 /*:
  ## Optionals
@@ -187,7 +191,7 @@ opt1 = "my first optional string"
 
 /*:
  ### Forced Unwrap
- - The simpless and most dangerous way to unwrap (unbox) an optional is called `forced unwrap`
+ - The simplest and most dangerous way to unwrap (unbox) an optional is called `forced unwrap`
  - Generally avoid this unless you are sure of what you're doing
  - It simply uses the bang `!` operator
  */
@@ -195,7 +199,7 @@ opt1 = "my first optional string"
 var n3: Int?
 n3 = 20
 
-//n3 + 10 //error n3 is not an Int
+// n3 + 10 //error n3 is not an Int
 
 let r4 = n3! + 20
 
@@ -222,7 +226,7 @@ if n3 != nil {
 let n6:String?
 n6 = "yippy"
 
-//n6 = "NO" //error you can't reassign `let`
+// n6 = "NO" //error you can't reassign `let`
 
 /*:
  ### Optional Binding
@@ -264,7 +268,7 @@ let downCastString = anyString as! String // downcasting can fail so it returns 
 
 let a1 = [2, 4, 6, 8] // [Int] type inferred
 
-//error let a2 = [2, 4, 6, 8, "John"]
+//let a2 = [2, 4, 6, 8, "John"]
 
 //: Create Mutable Empty Array of String types in 2 Ways
 
@@ -440,7 +444,7 @@ repeat {
  - they can be passed as parameters, assigned to variables, added to collections, etc.
  */
 
-func greeting()-> Void {
+func greeting() -> () {
   print(#line, "hello!")
 }
 
@@ -602,7 +606,7 @@ fred.fullName()
 
 //: **Notice:** classes have a default init which is no longer used once you create a custom init
 
-//error Person() // this just calls init
+// Person() // this just calls init
 
 //: You must explicitly mark override method with the keyword `override`
 
@@ -808,7 +812,7 @@ flyingMachine(flyable: rubber)
 
 /*:
  ## Resources
- * [Swift 3 Language Guide](https:developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#apple_ref/doc/uid/TP40014097-CH5-ID309)
+ * [Swift 3 Language Guide](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID309)
  */
 
 
