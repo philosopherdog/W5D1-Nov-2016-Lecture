@@ -1,14 +1,11 @@
 import UIKit
 /*:
- ## Swift 3
+ ## Swift 3/4
  
  - In 2014 Apple blew away developers with a surprise announcement that a new programming language called Swift had been secretly under development for 4 years!
  
  - Since being announced Swift has been officially open sourced and has been ported to Linux. This is huge because it makes its use on servers possible.
  
- - Google has been talking about using it to replace Java on Android!
- 
- - Swift is still rapidly changing. New versions of Swift are not expected to be source compatible until at least Swift 4. So, this limits its use to apps that are not mission critical.
  */
 /*:
  
@@ -46,34 +43,40 @@ breakfast = "Toast"
  - Swift declares types *after* the name following a colon
  */
 
-var address = "289 Anywhere St"
+var address: String = "289 Anywhere St"
 
 /*:
- - Swift supports "type inference"
+ - Swift supports "type inference" which allows us to omit the type when we have a value to assign and it is one the compiler recognizes as default.
  */
 
 var address2 = "34 Jones Cr"
 
-var address3: String
+var address3: String // here we must give address3 a type because it has no value assigned
 
 /*:
  #### Types
- - Types are upper cased
- - Instances are lower cased
- - There arre Swift specific foundation types for Int, Double, String, Array, Dictionary, Set, etc.
- - Swift can also easily and seamlessly cast between Swift Foundation types and the old foundation classes
- - Swift has a generic type like `id` called `AnyObject`
- - Swift also has a type `Any` which includes functions
- - You have to cast between them using **as**
+ - Types are always upper cased
+ - Instances are always lower cased
+ - There are Swift specific foundation types for Int, Double, String, Array, Dictionary, Set, etc.
+ - Swift can also easily and seamlessly cast between Swift Foundation types and the older foundation classes we're used to in Objc.
+ - Swift has a generic type like `id` called `Any`. (There is also `AnyObject` and the relationship between these has morphed in complex ways. Find info [here](https://medium.com/@mimicatcodes/any-vs-anyobject-in-swift-3-b1a8d3a02e00).
+ - For types that are related either by subclassing or protocols you can cast using the **as** keyword. (I will not talk about failable casting here).
  */
 
 var address4 = address2 as NSString
-let address5 = address4 as AnyObject
+let address5 = address4 as Any
 let address6 = address5 as! NSString // we'll discuss "!" below
+
+/*:
+ - If you mean to convert between types then you must pass one value to the constructor of another. Eg.:
+ */
+
+let numerOfCats = 10
+let numerOfCatsString = String(numerOfCats)
 
 //: **Tip:** prefer Swift types where possible
 
-//: Integer literals default to Swift **Int** type, which is a struct (more on structs below)
+//: Integer literals default to Swift **Int** type, which is a struct (more on structs below).
 
 var n1 = 1
 let n2 = -2
@@ -89,6 +92,7 @@ let f2 = 2.0
 let f4: Float = 4.0
 var u1: UInt = 20
 var n32: Int32 = 32 // You can specify Int sizes
+let cgFloat: CGFloat = 2.0
 
 /*:
  ### `print()` & String Interpolation
@@ -99,6 +103,7 @@ let s2 = "Mud"
 print(#line, f1)
 print("\(#line) my name is \(s2)")
 print("(#line) my favourite number is \(f4 + Float(f2))")
+print(#line, "you can also use print like", "this", "because print is a variadic function!")
 
 /*:
  ## Operators
@@ -147,10 +152,11 @@ if name3 > name3Cap {
 var name4 = name3
 name4.removeAll()
 let result3 = name4.isEmpty == true ? "Empty" : "Not Empty"
+name3
 
 /*:
  ## Optionals
- - All variables/constants in Swift must have a value unlike Objc
+ - All variables/constants members in Swift must have a value at initialization unlike Objc
  */
 
 /*
@@ -184,10 +190,11 @@ opt1 = "my first optional string"
 
 /*:
  ## Why Optionals Need to be Unwrapped
- - Think of Optionals as a box, just like NSNumber in Objc
- - Just like you cannot do very much with an NSNumber in Objc unless you call `intValue` on it to get the underlying value. So too Optionals can only be used for nil checking without **unwrapping** them
- 
+ - Think of Optionals as a box, just like NSNumber in Objc.
+ - You can't do very much with an NSNumber in Objc unless you call `intValue`\`integerValue` on it to get the underlying value. Optionals are the same. They can only be used for nil checking without **unwrapping** them.
  */
+
+//opt1 += " extra stuff"
 
 /*:
  ### Forced Unwrap
@@ -204,7 +211,7 @@ n3 = 20
 let r4 = n3! + 20
 
 /*:
- - Optionals allow you to set any value to nil, including C Struct types, and Int values (but Ints are object types in Swift anyway so that's not that crazy).
+ - Optionals allow you to set any value to nil, including (wrapped) C Struct types, and Int values. Can you set integers to nil in Objc?
  */
 
 var n5:Int? = nil
@@ -222,7 +229,7 @@ if n3 != nil {
   n3!
 }
 
-//: Notice `let` allows you to start nil and have an initial assignment
+//: Notice `let` allows you to start as nil and then do an initial assignment
 let n6:String?
 n6 = "yippy"
 
@@ -237,10 +244,10 @@ if let n6 = n6 {
   print(#line, n6) // prints YES
 }
 
-//: **Tip:** The constant we bind it to can be named anything, but always prefer to re-use the initial name
+//: **Tip:** The constant we bind it to can be named anything, but always prefer to re-use the initial name when possible (this is the preferred style)
 
 if let someConstant = n6 {
-  print(#line, someConstant) // prints YES
+  print(#line, someConstant + " more stuff") // prints YES, notice I don't have to unwrap it using (!) inside the block.
 }
 
 //: guard lets you bind and handle the unwrapped optional outside the block! This is insanely powerful. 👍🏻
@@ -251,36 +258,47 @@ guard let n6 = n6 else {
 
 n6 // is unwrapped now
 
+//: But notice guard doesn't let you fall through. So, use it for conditions that are failing. You can use guard for ordinary if checking too.
+
+guard 6 == 6 else {
+  // the universe makes no sense!
+  fatalError()
+}
+
 /*:
  ## Casting & Optionals
  */
 
 let anyString = "some string" as AnyObject // upcasting never fails
-let downCastString = anyString as! String // downcasting can fail so it returns an optional
+let downCastString = anyString as? String // downcasting can fail so it returns an optional
 
 /*:
  ## Arrays
- - Similar to `NSArray`, and you can still use `NSArray` (but prefer `Array`)
- - `NSArray` is heterogeneous
- - `Array` is homogeneous
+ - Similar to `NSArray`, and you can still use `NSArray` (prefer `Array`)
+ - `NSArray` is heterogeneous, but you can limit it using generics.
+ - `Array` is homogeneous by design, but can be made heterogeneous (you almost always want arrays to be homogeneous)
  */
 
 
 let a1 = [2, 4, 6, 8] // [Int] type inferred
 
-//let a2 = [2, 4, 6, 8, "John"]
+let a22: [Any] = [2, 4, 6, 8, "John"] // You must explicitly cast this
 
-//: Create Mutable Empty Array of String types in 2 Ways
+//: Create Mutable Empty Array of String types in 3 Ways! (prefer the second way)
 
 var a3: [String] = [] // this seems more intuitive to me
 var a4 = [String]()
+var a55: Array<String> = []
 
 a3.append("One")
 let a5 = ["Two", "Three"]
 a3.append(contentsOf: a5)
 a3
 
+// accessing
 a3[0]
+
+let a222 = a3 + a5 // easy concat
 
 /*:
  ## Range
@@ -291,11 +309,17 @@ a3[0]
 let range1 = 1...3
 a1[range1]
 
+// check if a value is in a range!
 if range1 ~= 1 {
   print("yes 1 is within range1")
 }
 
 a3[0...1] // slicing an array
+
+// Swift 4 adds open ended range slicing!
+a3[..<2]
+a3[1...]
+
 
 //: Half-Open Range
 let range2 = 0..<2
@@ -330,7 +354,7 @@ for (index, value) in n7.enumerated() {
 
 
 
-//: No C style loops as of Swift 3!
+//: No C style loops as of Swift 3+!
 
 /*
  for (i = 0; i < 10; ++i) {
@@ -338,11 +362,21 @@ for (index, value) in n7.enumerated() {
  }
  */
 
+// Use `_` if you don't need the index
+for _ in 0...3 {
+  print(#line, "again")
+}
+
+//: You can use stride for full control
+for i in stride(from: 10, to: 0, by: -1) {
+  print(#line, i)
+}
+
 /*:
  ## Dictionary
- - Similar to `NSDictionary`
- - `NSDictionary` is heterogeneous
- - `Dictionary` is homogeneous
+ - Similar to `NSDictionary`.
+ - `NSDictionary` is heterogeneous by design.
+ - `Dictionary` is homogeneous by design.
  */
 
 //: Immutable
@@ -352,6 +386,8 @@ finalGradeDict1 = ["John": 88, "Erik": 60, "Lori": 70]
 
 let grade1 = finalGradeDict1["John"]
 
+// Dictionary access always returns an optional!
+
 //: Mutable
 
 var answersDict: [Int: Int] = [2: 2*2, 3: 3*3, 4: 4*4]
@@ -359,7 +395,7 @@ let answer1 = answersDict[2]
 let answer2 = answersDict[5]
 
 if let answer2 = answer2 {
-  print("answer2 is nil. this will never execute")
+  print(#line, "\(answer2) is nil", "this will never execute!")
 }
 
 // mutating
@@ -382,6 +418,7 @@ let interestingNumbers =
    "Fibonacci": [1, 1, 2, 3, 5, 8],
    "Square": [1, 4, 9, 16, 25]
 ]
+
 for (kind, numbers) in interestingNumbers {
   print(#line, kind)
   for number in numbers {
@@ -391,7 +428,7 @@ for (kind, numbers) in interestingNumbers {
 
 /*:
  ## Switch
- `switch` much more powerful in Swift. not just limited to integers
+ `switch` much more powerful in Swift. Not just limited to integers
  
  1. switch on any type of data.
  2. can handle complex cases.
@@ -422,6 +459,7 @@ comment // unwrapped here!
 /*:
  ## While Loop
  */
+
 var count = 0
 while count < 5 {
   print(#line, count)
@@ -430,18 +468,18 @@ while count < 5 {
 
 //: repeat-while is Swift's do-while
 
-var counter2 = 0
+var count2 = 0
 repeat {
-  print(#line, counter2)
-  counter2 += 1
-} while counter2 < 0
+  print(#line, count2)
+  count2 += 1
+} while count2 < 0
 
 /*:
  ## Functions
- - functions are named closures
- - functions are first class citizens (unlike Objc)
- - functions can be nested inside other functions
- - they can be passed as parameters, assigned to variables, added to collections, etc.
+ - Functions are named closures.
+ - Functions are first class citizens (unlike Objc).
+ - Functions can be nested inside other functions.
+ - Functions can be passed as parameters, assigned to variables, added to collections, etc.
  */
 
 func greeting() -> () {
@@ -456,13 +494,14 @@ let funcArray = [greeting]
 funcArray[0]()
 
 //: Unlike Objc Swift includes an initial external parameter name (new in Swift 3)
+
 func greetingWith(firstName: String, hours: Int) -> String {
   return "\(#line) \(firstName) you have \(hours) hours this week"
 }
 
 greetingWith(firstName: "John", hours: 10)
 
-//: ommitting the first param like Objc
+//: This is how you ommit the first param like Objc (Don't do it this way unless you're interoperating with Objc).
 
 func greetingWithFirstName(_ firstName:String) -> String {
   return "\(#line) hello \(firstName)"
@@ -474,13 +513,13 @@ greetingWithFirstName("Mammy")
 
 /*:
  ## Closures
- - They function identically to Objc blocks (which we haven't talked about!)
- - Closures are simply unnamed functions
+ - They function identically to Objc blocks (which we haven't explicitly talked about!).
+ - Closures are simply unnamed functions.
  */
 
 //: Function
 
-func greeting3(name:String) -> String {
+func greeting3(name: String) -> String {
   return "\(#line) hello \(name)"
 }
 
@@ -496,7 +535,7 @@ close1("Nickolas")
 
 //: Swift can infer the type of a closure
 
-let close2 = {() -> (Void) in
+let close2 = {() -> () in
   print(#line, "inferred type")
 }
 
@@ -553,7 +592,7 @@ theLastName
 
 /*:
  ## Classes
- - Swift has 3 object types Classes, Structs, and Enums
+ - Swift has 3 object types Classes, Structs, and Enums.
  - Classes are reference types.
  - Structs and Enums are value types.
  */
@@ -579,9 +618,9 @@ class Person {
     // property observer
     didSet {
       print(#line, oldValue)
-      print(#line, age)
     }
   }
+  
   let libraryCard: LibraryCard?
   init(firstName: String, lastName:String, libraryCard: LibraryCard? ) {
     self.firstName = firstName
@@ -622,9 +661,9 @@ person2.fullName()
 
 /*:
  ## Structs
- - very similar to classes
- - but they are value types
- - they cannot be subclassed (but you can use protocols)
+ - Very similar to classes.
+ - But they are value types.
+ - They cannot be subclassed (but you can use protocols).
  */
 
 import CoreLocation
@@ -677,8 +716,8 @@ dog2.change(location: CLLocation(latitude: 43.6532, longitude: -79.3832))
 
 /*:
  ## Enums
- - Way more powerful than C style enums
- - Can be used with Strings and Character values as well as numberic values
+ - Way more powerful than C style enums.
+ - Can be used with Strings and Character values as well as numberic values.
  */
 
 enum Suit1: String {
@@ -741,8 +780,8 @@ case .delayed(let minutes):
 
 /*:
  ## Extensions
- - like Objc categories
- - Used extensively especially for organizing code
+ - like Objc categories.
+ - Used extensively especially for organizing code.
  */
 
 class MasterViewController: UIViewController {
@@ -778,7 +817,7 @@ frame.prettyPrint()
 
 /*:
  ## Protocols
- - The same as Objc, except optional protocols are not there out of the box
+ - The same as Objc, except optional protocol methods are not available out of the box and are not available to value types.
  */
 
 protocol Flyable {
